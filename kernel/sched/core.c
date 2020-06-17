@@ -2045,8 +2045,7 @@ static void ttwu_queue(struct task_struct *p, int cpu)
 	 */
 	if (sched_feat(TTWU_QUEUE) &&
 			!idle_cpu(cpu) &&
-			(sched_feat(TTWU_QUEUE_SAME_FORCE) ||
-			!cpus_share_cache(smp_processor_id(), cpu))) {
+			!cpus_share_cache(smp_processor_id(), cpu)) {
 		sched_clock_cpu(cpu); /* Sync clocks across CPUs */
 		ttwu_queue_remote(p, cpu);
 		return;
