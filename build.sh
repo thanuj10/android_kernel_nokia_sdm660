@@ -13,7 +13,7 @@ KERNEL_NAME="Enigma"
 VERSION="WALT"
 DATE=$(date +"%d-%m-%Y-%I-%M")
 DEVICE="NOKIA_SDM660"
-FINAL_ZIP=$KERNEL_NAME-$VERSION-$DATE-$DEVICE.zip
+FINAL_ZIP=$KERNEL_NAME-$VERSION-$DATE.zip
 defconfig=nokia_defconfig
 
 # Dirs
