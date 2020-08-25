@@ -634,6 +634,8 @@ KBUILD_CFLAGS += $(call cc-option, -mno-global-merge,)
 KBUILD_CFLAGS += $(call cc-option, -fcatch-undefined-behavior)
 KBUILD_CFLAGS += $(call cc-option, -no-integrated-as)
 KBUILD_AFLAGS += $(call cc-option, -no-integrated-as)
+# Silence linkage failure errors during compilation due to the introduction of the recent "stpcpy" optimization in clang.
+KBUILD_CFLAGS += $ -fno-builtin-stpcpy
 else
 
 # These warnings generated too much noise in a regular build.
