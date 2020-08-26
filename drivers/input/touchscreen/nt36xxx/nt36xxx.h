@@ -58,7 +58,7 @@
 
 //---Touch info.---
 #define TOUCH_DEFAULT_MAX_WIDTH 1080
-#define TOUCH_DEFAULT_MAX_HEIGHT 1920
+#define TOUCH_DEFAULT_MAX_HEIGHT 2160	//Orig-1920	//SW4-HL-TP-FixBottomAreaNotResponseIssue-00*_20190730
 #define TOUCH_MAX_FINGER_NUM 10
 #define TOUCH_KEY_NUM 0
 #if TOUCH_KEY_NUM > 0
