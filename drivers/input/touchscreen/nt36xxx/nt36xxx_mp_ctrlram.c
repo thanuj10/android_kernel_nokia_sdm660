@@ -40,11 +40,11 @@
 //#define FW_CC_CSV_FILE "/data/local/tmp/FWCCTest.csv"
 //#define NOISE_TEST_CSV_FILE "/data/local/tmp/NoiseTest.csv"
 
-#define SHORT_TEST_CSV_FILE "/data/misc/touch/ShortTest.csv"
-#define OPEN_TEST_CSV_FILE "/data/misc/touch/OpenTest.csv"
-#define FW_RAWDATA_CSV_FILE "/data/misc/touch/FWMutualTest.csv"
-#define FW_CC_CSV_FILE "/data/misc/touch/FWCCTest.csv"
-#define NOISE_TEST_CSV_FILE "/data/misc/touch/NoiseTest.csv"
+#define SHORT_TEST_CSV_FILE "/data/vendor/misc/touch/ShortTest.csv"
+#define OPEN_TEST_CSV_FILE "/data/vendor/misc/touch/OpenTest.csv"
+#define FW_RAWDATA_CSV_FILE "/data/vendor/misc/touch/FWMutualTest.csv"
+#define FW_CC_CSV_FILE "/data/vendor/misc/touch/FWCCTest.csv"
+#define NOISE_TEST_CSV_FILE "/data/vendor/misc/touch/NoiseTest.csv"
 
 #define nvt_mp_seq_printf(m, fmt, args...) do {	\
 	seq_printf(m, fmt, ##args);	\
@@ -1457,7 +1457,7 @@ static int32_t nvt_selftest_open(struct inode *inode, struct file *file)
 		 * Ex. nvt_pid = 500A
 		 *     mpcriteria = "novatek-mp-criteria-500A"
 		 */
-		snprintf(mpcriteria, sizeof(mpcriteria), "novatek-mp-criteria-%04X", ts->nvt_pid);
+		snprintf(mpcriteria, PAGE_SIZE, "novatek-mp-criteria-%04X", ts->nvt_pid);
 
 		nvt_mp_parse_dt(np, mpcriteria);
 	} else {
@@ -1655,7 +1655,7 @@ int fih_nvt_selftest_open(void)
 		 * Ex. nvt_pid = 500A
 		 *     mpcriteria = "novatek-mp-criteria-500A"
 		 */
-		snprintf(mpcriteria, sizeof(mpcriteria), "novatek-mp-criteria-%04X", ts->nvt_pid);
+		snprintf(mpcriteria, PAGE_SIZE, "novatek-mp-criteria-%04X", ts->nvt_pid);
 
 		nvt_mp_parse_dt(np, mpcriteria);
 	} else {
@@ -1803,7 +1803,7 @@ int fih_nvt_selftest_open(void)
 
 		// Save Rawdata to CSV file
 if (FIH_save_rawdata_to_csv(RawData_FWMutual, RecordResult_FWMutual, X_Channel, Y_Channel,
-		PS_Config_Lmt_FW_Rawdata_P, PS_Config_Lmt_FW_Rawdata_N, "/data/misc/touch/touch_data.txt", 0) < 0) {
+		PS_Config_Lmt_FW_Rawdata_P, PS_Config_Lmt_FW_Rawdata_N, "/data/vendor/misc/touch/touch_data.txt", 0) < 0) {
 	NVT_ERR("save rawdata to CSV file failed\n");
 	return -EAGAIN;
 }

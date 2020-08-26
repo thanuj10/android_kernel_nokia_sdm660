@@ -1468,13 +1468,13 @@ s32 fih_gtp_read_version(struct i2c_client *client, u16* version)
     }
     dev_err(&client->dev, "FIH IC Config Version: %d\n", buf_a[2]);
     if(fw_info->sensor_id == TRULY_ID){
-        snprintf(fih_touch_gt9xx, sizeof(fih_touch_gt9xx), "Goodix-V%02x%02x-T%d\n", buf[7], buf[6], buf_a[2]);
+        snprintf(fih_touch_gt9xx, PAGE_SIZE, "Goodix-V%02x%02x-T%d\n", buf[7], buf[6], buf_a[2]);
     }else if(fw_info->sensor_id == HLT_ID){
-        snprintf(fih_touch_gt9xx, sizeof(fih_touch_gt9xx), "Goodix-V%02x%02x-H%d\n", buf[7], buf[6], buf_a[2]);
+        snprintf(fih_touch_gt9xx, PAGE_SIZE, "Goodix-V%02x%02x-H%d\n", buf[7], buf[6], buf_a[2]);
     }else if(fw_info->sensor_id == OFILM_ID){
-        snprintf(fih_touch_gt9xx, sizeof(fih_touch_gt9xx), "Goodix-V%02x%02x-M%d\n", buf[7], buf[6], buf_a[2]);
+        snprintf(fih_touch_gt9xx, PAGE_SIZE, "Goodix-V%02x%02x-M%d\n", buf[7], buf[6], buf_a[2]);
     }else {
-        snprintf(fih_touch_gt9xx, sizeof(fih_touch_gt9xx), "Goodix-V%02x%02x-%d\n", buf[7], buf[6], buf_a[2]);
+        snprintf(fih_touch_gt9xx, PAGE_SIZE, "Goodix-V%02x%02x-%d\n", buf[7], buf[6], buf_a[2]);
     }
     fih_info_set_touch(fih_touch_gt9xx);
 
@@ -1944,31 +1944,34 @@ err_enable_vdd_ana:
 static int gtp_power_off(struct goodix_ts_data *ts)
 {
     int ret = 0;
-    if (ts->vcc_i2c) {
-        set_bit(POWER_OFF_MODE, &ts->flags);
-        ret = regulator_disable(ts->vcc_i2c);
-        if (ret) {
-            dev_err(&ts->client->dev,
-                "Regulator vcc_i2c disable failed ret=%d\n",
-                ret);
-            goto err_disable_vcc_i2c;
-        }
-        dev_info(&ts->client->dev,
-             "Regulator vcc_i2c disabled\n");
-    }
 
-    if (ts->vdd_ana) {
-        set_bit(POWER_OFF_MODE, &ts->flags);
-        ret = regulator_disable(ts->vdd_ana);
-        if (ret) {
-            dev_err(&ts->client->dev,
-                    "Regulator vdd disable failed ret=%d\n",
-                    ret);
-            goto err_disable_vdd_ana;
-        }
-        dev_info(&ts->client->dev,
-             "Regulator vdd_ana disabled\n");
-    }
+	if (strstr(saved_command_line, "androidboot.device=TAS") == NULL) {
+	    if (ts->vcc_i2c) {
+	        set_bit(POWER_OFF_MODE, &ts->flags);
+	        ret = regulator_disable(ts->vcc_i2c);
+	        if (ret) {
+	            dev_err(&ts->client->dev,
+	                "Regulator vcc_i2c disable failed ret=%d\n",
+	                ret);
+	            goto err_disable_vcc_i2c;
+	        }
+	        dev_info(&ts->client->dev,
+	             "Regulator vcc_i2c disabled\n");
+	    }
+
+	    if (ts->vdd_ana) {
+	        set_bit(POWER_OFF_MODE, &ts->flags);
+	        ret = regulator_disable(ts->vdd_ana);
+	        if (ret) {
+	            dev_err(&ts->client->dev,
+	                    "Regulator vdd disable failed ret=%d\n",
+	                    ret);
+	            goto err_disable_vdd_ana;
+	        }
+	        dev_info(&ts->client->dev,
+	             "Regulator vdd_ana disabled\n");
+	    }
+	}
     return ret;
 
 err_disable_vdd_ana:
