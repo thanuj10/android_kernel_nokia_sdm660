@@ -14,8 +14,8 @@ VERSION="PELT"
 DATE=$(date +"%d-%m-%Y-%I-%M")
 DEVICE="NOKIA_SDM660"
 FINAL_ZIP=$KERNEL_NAME-$VERSION-$DATE.zip
-defconfig=nokia_defconfig
-
+defconfig=enigma_defconfig
+ 
 # Dirs
 BASE_DIR=`pwd`/../
 KERNEL_DIR=$BASE_DIR/sdm660
